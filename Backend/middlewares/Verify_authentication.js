@@ -3,16 +3,16 @@ const handleError = require("../utils/handleError");
 const handleUnknownError = require("../utils/handleUnknownError");
 const userModel = require("../models/userModel");
 
-const authentication = async (req , res , next) =>{
+const verifyAuthentication = async (req , res , next) =>{
 
      try {
-           const  ZerodhaToken = req.cookies.ZerodhaToken
+           const  ZerodhaVerify = req.cookies.ZerodhaVerify
 
-           if (!ZerodhaToken){ 
+           if (!ZerodhaVerify){ 
                 return next (handleError (res , 402 , "Does not have token"))
            }
 
-           const decoded = jwt.verify(ZerodhaToken , process.env.JWT_SECRET)
+           const decoded = jwt.verify(ZerodhaVerify , process.env.JWT_SECRET)
            req.user = await userModel.findById(decoded.userId)
            
             next();
@@ -23,4 +23,4 @@ const authentication = async (req , res , next) =>{
 
 }
 
-module.exports = authentication;
+module.exports = verifyAuthentication;

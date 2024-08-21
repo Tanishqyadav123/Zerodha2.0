@@ -423,10 +423,284 @@ console.log("Message sent: %s", info.messageId);
 return info.messageId;
 
 }
+
+
+// Template for reset Password OTP 
+async function resetPasswordOTPMail (mailId , OTP){
   
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+    user: "yadavtanishq949@gmail.com",
+    pass : "wzbk dgva dwom uxqw"
+    },
+});
+
+ const resetPasswordOTP = `<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Reset Password Email Template</title>
+    <meta name="description" content="Reset Password Email Template." />
+    <style type="text/css">
+      a:hover {
+        text-decoration: underline !important;
+      }
+    </style>
+  </head>
+
+  <body
+    marginheight="0"
+    topmargin="0"
+    marginwidth="0"
+    style="margin: 0px; background-color: #f2f3f8"
+    leftmargin="0"
+  >
+    <!--100% body table-->
+    <table
+      cellspacing="0"
+      border="0"
+      cellpadding="0"
+      width="100%"
+      bgcolor="#f2f3f8"
+      style="
+        @import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700);
+        font-family: 'Open Sans', sans-serif;
+      "
+    >
+      <tr>
+        <td>
+          <table
+            style="background-color: #f2f3f8; max-width: 670px; margin: 0 auto"
+            width="100%"
+            border="0"
+            align="center"
+            cellpadding="0"
+            cellspacing="0"
+          >
+            <tr>
+              <td style="height: 80px">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">
+                <a href="https://rakeshmandal.com" title="logo" target="_blank">
+                  <img
+                    width="60"
+                    src="https://i.ibb.co/hL4XZp2/android-chrome-192x192.png"
+                    title="logo"
+                    alt="logo"
+                  />
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td style="height: 20px">&nbsp;</td>
+            </tr>
+            <tr>
+              <td>
+                <table
+                  width="95%"
+                  border="0"
+                  align="center"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="
+                    max-width: 670px;
+                    background: #fff;
+                    border-radius: 3px;
+                    text-align: center;
+                    -webkit-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.06);
+                    -moz-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.06);
+                    box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.06);
+                  "
+                >
+                  <tr>
+                    <td style="height: 40px">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0 35px">
+                      <h1
+                        style="
+                          color: #1e1e2d;
+                          font-weight: 500;
+                          margin: 0;
+                          font-size: 32px;
+                          font-family: 'Rubik', sans-serif;
+                        "
+                      >
+                        You have requested to reset your password
+                      </h1>
+                      <span
+                        style="
+                          display: inline-block;
+                          vertical-align: middle;
+                          margin: 29px 0 26px;
+                          border-bottom: 1px solid #cecece;
+                          width: 100px;
+                        "
+                      ></span>
+                      <p
+                        style="
+                          color: #455056;
+                          font-size: 15px;
+                          line-height: 24px;
+                          margin: 0;
+                        "
+                      >
+                        We cannot simply send you your old password.That why we have send you a One Time Password (OTP). To reset your password
+
+                       
+                        
+                      </p>
+                      <div
+                        href="javascript:void(0);"
+                        style="
+                          background: #20e277;
+                          text-decoration: none !important;
+                          font-weight: 500;
+                          margin-top: 35px;
+                          color: #fff;
+                          text-transform: uppercase;
+                          font-size: 14px;
+                          padding: 10px 24px;
+                          display: inline-block;
+                          border-radius: 50px;
+                        "
+                        > <b>MyResetPasswordOTP</b></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px">&nbsp;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="height: 20px">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">
+                <p
+                  style="
+                    font-size: 14px;
+                    color: rgba(69, 80, 86, 0.7411764705882353);
+                    line-height: 18px;
+                    margin: 0 0 0;
+                  "
+                >
+                  &copy; <strong>www.Zerodha2.0.com</strong>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="height: 80px">&nbsp;</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--/100% body table-->
+  </body>
+</html>
+`
+
+const info = await transporter.sendMail({
+  from: 'yadavtanishq949@gmail.com', // sender address
+  to: mailId, // list of receivers
+  subject: "Reset Password Verification", // Subject line
+  html: resetPasswordOTP.replace("MyResetPasswordOTP" , OTP), // html body
+});
+
+console.log("Message sent: %s", info.messageId);
+return info.messageId;
+
+}
+
+
+async function kycSuccess (mailId , fullName){
+  
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+    user: "yadavtanishq949@gmail.com",
+    pass : "wzbk dgva dwom uxqw"
+    },
+});
+
+ const kycSuccessTemplate = `<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+  </head>
+    <style>
+      body {
+        text-align: center;
+        padding: 40px 0;
+        background: #EBF0F5;
+      }
+        h1 {
+          color: #88B04B;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-weight: 900;
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+        p {
+          color: #404F5E;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-size:20px;
+          margin: 0;
+        }
+      i {
+        color: #9ABC66;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left:-15px;
+      }
+      .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+      }
+    </style>
+    <body>
+      <div class="card">
+      <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+        <i class="checkmark">✓</i>
+      </div>
+        <h1>Success</h1> 
+        <p> <b>FULLNAME</b> ,Your KYC on Zerodha 2.0 is Completed SuccessFully<br/> Enjoy Investing !</p>
+      </div>
+    </body>
+</html>
+`
+
+const info = await transporter.sendMail({
+  from: 'yadavtanishq949@gmail.com', // sender address
+  to: mailId, // list of receivers
+  subject: "KYC Completion!!!", // Subject line
+  html: kycSuccessTemplate.replace("FULLNAME" , fullName), // html body
+});
+
+console.log("Message sent: %s", info.messageId);
+return info.messageId;
+
+}
+
+
+
 
 
 
   //  khushbunamdev91@gmail.com
 
-module.exports = {sendNodeMail , sendWelComeMail}
+module.exports = {sendNodeMail , sendWelComeMail , resetPasswordOTPMail , kycSuccess}

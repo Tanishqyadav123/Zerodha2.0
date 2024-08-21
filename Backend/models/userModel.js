@@ -28,6 +28,12 @@ const userSchema = new mongoose.Schema({
       verifyTokenExpiry : {
          type : Date
       },
+      resetPasswordToken : {
+         type : String,
+      },
+      resetPasswordTokenExpiry : {
+         type : Date
+      },
       isVerified : {
          type : Boolean,
          default : false
@@ -35,6 +41,10 @@ const userSchema = new mongoose.Schema({
       kycId : {
          type : mongoose.Schema.Types.ObjectId,
          ref : "kyc"
+      },
+      isKYCCompleted : {
+         type : Boolean,
+         default : false
       },
       bankId : {
          type : mongoose.Schema.Types.ObjectId,

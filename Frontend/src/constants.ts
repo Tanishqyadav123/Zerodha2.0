@@ -1,0 +1,1 @@
+export const USER_BASE_URL : string = "http://localhost:8080/api/v1/user"

@@ -11,7 +11,15 @@ const kycSchema = new mongoose.Schema({
          required : true,
          unique : true
      },
+     birthDate : {
+           type : Date,
+           required : true
+     },
      selfie :{
+         type : String,
+         required : true
+     },
+     selfie_publicId : {
          type : String,
          required : true
      }
