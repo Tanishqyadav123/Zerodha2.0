@@ -1,15 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import landingImage from '../../public/Images/SignUp_Page_Landing_Image.png'
 import { Button } from '../components/ui/button'
 import { SignUpType } from '../types'
 import axios from 'axios'
 import { USER_BASE_URL } from '../constants'
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { toast } from 'sonner'
 function SignUp() {
 
 const navigate = useNavigate()
 const [userDetails , setUserDetails] = useState<SignUpType>({ fullName : "" , email : "" , password : "" , phoneNumber : 0 })
 const [loading , setLoading] = useState(false)
+const userInfo = useSelector((state) => state.user)
+
+useEffect(() =>{
+   
+  if (userInfo.isAuth){
+       toast("You are LoggedIn")
+      navigate("/")
+  }
+} , [])
 const handleChange = (e) : void =>{
 
     setUserDetails({...userDetails , [e.target.name] : e.target.value} )

@@ -1,20 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SignInType } from '../types'
 import kiteLogo from '../../public/Images/kiteLogo.svg'
 import { Button } from '../components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { USER_BASE_URL } from '../constants'
+import { toast } from 'sonner'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginSuccess } from '../Redux/Slices/userSlice'
 
 function SignIn() {
 
-
+  const userInfo = useSelector((state) => state.user)
+  const disPatch = useDispatch()
   const [userDetails , setUserDetails] = useState<SignInType>({
     email : "",
     password : ""
   })
   const navigate = useNavigate()
   const [loading , setLoading] = useState<boolean>(false)
+  
+  useEffect(() =>{
+     if (userInfo.isAuth){
+      
+      toast("You are LoggedIn")
+         navigate("/")
+     }
+  } , [])
+
+ 
 
   const handleChange = (e) =>{
      setUserDetails({...userDetails , [e.target.name] : e.target.value})
@@ -26,10 +40,16 @@ function SignIn() {
       await axios.post(`${USER_BASE_URL}/login` , userDetails , {withCredentials : true})
       .then((value) =>{
         navigate("/")
+
+        // Add the userInfo into the store :-
+        disPatch (loginSuccess(value.data.data))
          console.log(value.data)
       })
       .catch((error) =>{
          console.log(error)
+         if (error.response.status === 404) {
+             toast("user not found...Please Try Again After Register")
+         }
          if (error.response.data.message === "Please Verify your email first"){
            navigate("/verifyEmail")
          }

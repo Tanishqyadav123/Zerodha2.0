@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom"
            navigate ("/signin")
         })
         .catch((error) =>{
+          
            console.log(error)
         })
         .finally(() =>{

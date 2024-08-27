@@ -77,10 +77,10 @@ const verifyUserEmail = async (req , res , next) =>{
      
      try {
           const registeredUser = req.user;
-          const {otp} = req.body;
+          const {OTP} = req.body;
           console.log(registeredUser)
 
-          if (!otp){
+          if (!OTP){
                 return next (handleError(res , 400 , "Please Fill All OTP Field"))
           }
           console.log("Registered User " , registeredUser)
@@ -91,7 +91,7 @@ const verifyUserEmail = async (req , res , next) =>{
                return next (handleError(res , 404 , "User not found"))
           }
     
-          if (isUser.verifyToken.toString() !== otp || isUser.verifyTokenExpiry < Date.now()){
+          if (isUser.verifyToken.toString() !== OTP || isUser.verifyTokenExpiry < Date.now()){
               //  again send to register page...
               return next (handleError(res , 400 , "OTP Does not Match"))
           }
@@ -351,4 +351,25 @@ const setNewPassword = async(req , res , next) =>{
 
 }
 
-module.exports = {registerUser , verifyUserEmail , getUser , loginUser , sendForgotPasswordOTP , verifyPasswordResetOTP , setNewPassword}
+
+const logoutUser = async (req , res , next) =>{
+
+      try {
+          
+          res.cookie ("ZerodhaAuth" , "" , {
+               maxAge : 0,
+               sameSite : "strict",
+               secure : false,
+               httpOnly : true
+          });
+
+          return next (handleResponse(res , 200 , "User Logged Out SuccessFully"))
+
+      }
+      catch (error) {
+           return next (handleUnknownError(res , error.message))
+      }
+
+}
+
+module.exports = {registerUser , verifyUserEmail , getUser , loginUser , sendForgotPasswordOTP , verifyPasswordResetOTP , setNewPassword , logoutUser}

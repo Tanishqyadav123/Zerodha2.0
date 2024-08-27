@@ -7,12 +7,12 @@ const handleUnknownError = require("../utils/handleUnknownError");
 const { isValidAadhar, isValidPanNumber } = require("../utils/KYCValidation");
 
 const completeKYC = async (req , res , next) =>{
-    console.log(req.files)
+    console.log(req.file)
     
 try {
     const {aadharNumber , panCardNumber , birthDate} = req.body;
     const LoggedInUser = req.user;
-    console.log(req.files)
+    console.log("Files ", req.file)
 
     if (!aadharNumber || !panCardNumber || !birthDate){
          return next (handleError(res , 400 , "Please Provide all details"))
@@ -30,8 +30,8 @@ try {
    }
 
 //    From req.files take the selfie image and Upload it to cloudinary
-
-      const localFilePath = req.files?.selfie[0]?.path
+       
+      const localFilePath = req.file?.path
 
        if (!localFilePath){
          return next (handleError(res , 400 , "File for selfie is not provided"))
@@ -73,7 +73,7 @@ try {
     await LoggedInUser.save()
 
 
-    return next (handleResponse(res , 200 , "KYC Completed SuccessFully"))
+    return next (handleResponse(res , 200 , "KYC Completed SuccessFully" , LoggedInUser))
 
 }
 catch (error) {

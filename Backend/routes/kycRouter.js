@@ -4,11 +4,6 @@ const authTokenAuthentication = require("../middlewares/auth_Authentication")
 const upload = require("../middlewares/multer")
 const router = express.Router()
 
-router.post("/completeKYC" , authTokenAuthentication , upload.fields([
-    {
-        name : "selfie",
-        maxCount : 1
-    }
-]) , completeKYC)
+router.post("/completeKYC" , authTokenAuthentication , upload.single('selfie') , completeKYC)
 
 module.exports = router
